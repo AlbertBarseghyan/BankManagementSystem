@@ -1,26 +1,31 @@
 #include "../include/Account.h"
+#include "../include/Customer.h"
+
 #include <iostream>
 
 int main(){
 
-Account account(1001, "Albert", 50000);
+    Account account(1001, "Albert", 50000);
 
-std::cout << "Initial Balance: " << account.getBalance() << std::endl;
+    std::cout << "Account Holder: " << account.getHolderName() << std::endl;
 
-account.deposit(10000);
+    std::cout << " Balance: " << account.getBalance() << std::endl;
 
-std::cout << " After deposit: " << account.getBalance() << std::endl;
+    Customer customer{
+        504,
+        "Albert",
+        "+37493241079",
+        "barseghyan@mail.ru"
+    };
 
-bool success = account.withdraw(20000);
+    std::cout << "\n Customer ID: " << customer.getId() << std::endl;
+    std::cout << "\n Customer Name: " << customer.getName() << std::endl;
+    std::cout << "\n Customer Phone: " << customer.getPhone() << std::endl;
+    std::cout << "\n Customer Email: " << customer.getEmail() << std::endl;
 
-std::cout << " Withdraw Success: " << success << std::endl;
+    customer.setPhone("+37498546543");
 
-std::cout<<" After Withdraw: " << account.getBalance() << std::endl;
-
-account.deactivate();
-account.deposit(10000);
-
-std::cout<< " After deposit to inactive Account: " << account.getBalance() << std::endl;
+    std::cout << "New Phone: " << customer.getPhone() << std::endl;
 
 return 0;
 
