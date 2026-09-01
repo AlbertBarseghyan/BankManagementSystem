@@ -34,3 +34,12 @@ void Customer::addAccount(const Account& account){
 const std::vector<Account>& Customer::getAccounts() const {
     return accounts;
 }
+
+Account* Customer::findAccount(int accountId){
+    for(Account& account : accounts){
+        if(account.getId() == accountId){
+            return &account;
+        }
+    }
+    return nullptr;
+}

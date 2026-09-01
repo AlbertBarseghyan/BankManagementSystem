@@ -26,6 +26,9 @@ class Customer{
 
     void setPhone(const std::string& phone);
     void setEmail(const std::string& email);
+
+    Account* findAccount(int accountId);
+    
 };
 
 #endif
