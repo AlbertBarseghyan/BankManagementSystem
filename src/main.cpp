@@ -1,5 +1,6 @@
 #include "../include/Account.h"
 #include "../include/Customer.h"
+#include "../include/Transaction.h"
 
 #include <iostream>
 
@@ -33,6 +34,17 @@ int main(){
     //customer.setPhone("+37498546543");
 
     //std::cout << "New Phone: " << customer.getPhone() << std::endl;
+
+    Transaction transaction(
+        1,
+        1001,
+        TransactionType::Deposit,
+        20000
+    );
+
+    std::cout <<"\nTransaction ID: " << transaction.getId() << std::endl;
+    std::cout << "Account ID: " << transaction.getAccountId() << std::endl;
+    std::cout << "Amount: " << transaction.getAmount() << std::endl;
 
 return 0;
 
