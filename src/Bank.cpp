@@ -1,4 +1,6 @@
 #include "../include/Bank.h"
+#include <fstream>
+#include <sstream>
 
 void Bank::addCustomer(const Customer& customer){
     customers.push_back(customer);
@@ -141,6 +143,90 @@ bool Bank::transfer(
     );
 
     nextTransaction++;
+
+    return true;
+}
+
+bool Bank::saveAccountsToFile(const std::string& filename) const {
+    std::ofstream file(filename);
+
+    if(!file.is_open()){
+        return false;
+    }
+
+    for(const Customer& customer : customers){
+        for(const Account& account : customer.getAccounts()){
+            file << customer.getId() << ","
+            << account.getId() << ","
+            << account.getHolderName() << ","
+            << account.getBalance() << ","
+            << account.isActive()
+            << "\n";
+        }
+    }
+    file.close();
+
+    return true;
+}
+ 
+bool Bank::loadAccountsFromFile(const std::string& filename){
+    std::ifstream file(filename);
+
+    if(!file.is_open()){
+        return false;
+    }
+
+    std::string line;
+
+    while(std::getline(file, line)){
+        std::stringstream ss(line);
+
+        std::string customerIdStr;
+        std::string accountIdStr;
+        std::string holderName;
+        std:: string balanceStr;
+        std::string activeStr;
+
+        std::getline(ss, customerIdStr, ',');
+        std::getline(ss, accountIdStr, ',');
+        std::getline(ss, holderName, ',');
+        std::getline(ss, balanceStr, ',');
+        std::getline(ss, activeStr, ',');
+
+        int customerId = std::stoi(customerIdStr);
+        int accountId = std::stoi(accountIdStr);
+        double balance = std::stod(balanceStr);
+        bool active = std::stoi(activeStr);
+
+        Customer* customer = findCustomer(customerId);
+
+        if(customer == nullptr){
+            Customer newCustomer(
+                customerId,
+                holderName,
+                "",
+                ""
+            );
+
+            addCustomer(newCustomer);
+
+            customer = findCustomer(customerId);
+        }
+
+        if(customer != nullptr){
+            Account account(
+                accountId,
+                holderName,
+                balance
+            );
+            if(!active){
+                account.deactivate();
+            }
+
+            customer -> addAccount(account);
+        }
+    }
+    file.close();
 
     return true;
 }

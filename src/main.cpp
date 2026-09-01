@@ -177,6 +177,45 @@ for(const Transaction& transaction : bank.getTransaction()){
     std::cout << "--------------------" << std::endl;
 }
 
+bool saveSuccess = bank.saveAccountsToFile("data/accounts.txt");
+
+if(saveSuccess){
+    std::cout << "\nAccounts saved successfully" << std::endl;
+}
+else{
+    std::cout << "\nFailed to save accounts" << std::endl;
+}
+
+std::cout << "\n--- loading accounts from file ---" << std::endl;
+
+Bank loadedBank;
+
+bool loadSuccess = loadedBank.loadAccountsFromFile(
+    "data/accounts.txt"
+);
+
+if(loadSuccess){
+    std::cout << "Accounts loaded successfully" << std::endl;
+}
+else{
+    std::cout << "Failed to load accounts" << std::endl;
+}
+
+Customer* loadedCustomer = loadedBank.findCustomer(504);
+
+if(loadedCustomer != nullptr){
+    std::cout << "Loaded customer: " << loadedCustomer -> getName() << std::endl;
+
+    for(const Account& account : loadedCustomer -> getAccounts()){
+        std::cout << "Loaded Account ID: " << account.getId() << std::endl;
+
+        std::cout << "Loaded Balance: " << account.getBalance() << std::endl;
+    }
+}
+else{
+    std::cout << "loaded customer not found" << std::endl;
+}
+
 return 0;
 
 }
