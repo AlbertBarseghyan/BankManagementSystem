@@ -4,8 +4,17 @@ Account::Account(int id, const std::string& holderName, double balance)
 {
     this->id = id;
     this->holderName = holderName;
-    this->balance = balance;
-    this->active = true;
+   // this->balance = balance;
+    //this->active = true;
+if(balance >= 0){
+     this->balance = balance;
+}
+else{
+     this->balance = 0;
+}
+this->active = true;
+ 
+
 }
 
 int Account::getId() const
@@ -30,21 +39,30 @@ bool Account::isActive() const
 
 void Account::deposit(double amount)
 {
-    if (amount > 0)
-    {
-        balance += amount;
+    if(!active){
+        return;
     }
+
+    if(amount <= 0){
+        return;
+    }
+
+    balance += amount;
 }
 
 bool Account::withdraw(double amount)
 {
+    if (!active)
+    {
+        return false;
+    }
+
     if (amount <= 0)
     {
         return false;
     }
 
-    if (amount > balance)
-    {
+    if(amount > balance){
         return false;
     }
 
