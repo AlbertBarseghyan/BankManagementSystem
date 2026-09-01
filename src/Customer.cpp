@@ -27,3 +27,10 @@ void Customer::setPhone(const std::string& phone){
 void Customer::setEmail(const std::string& email){
     this -> email = email;
 }
+void Customer::addAccount(const Account& account){
+    accounts.push_back(account);
+}
+
+const std::vector<Account>& Customer::getAccounts() const {
+    return accounts;
+}
